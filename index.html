@@ -1,0 +1,1215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>HomeStep Physio — Bringing Movement Home</title>
+  <meta name="description" content="Physiotherapist-led movement and wellbeing in your own home. Gentle strength and balance classes, private home physiotherapy, and holistic wellbeing with Reiki — by Emma Harte, Chartered Physiotherapist." />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&display=swap" rel="stylesheet" />
+
+  <style>
+    /* ═══════════════════════════════════════════
+       RESET & CUSTOM PROPERTIES
+    ═══════════════════════════════════════════ */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --blue:      #1a4fdb;
+      --blue-dk:   #0d2e8a;
+      --blue-mid:  #1540b8;
+      --blue-pale: #f0f4ff;
+      --blue-tint: #e8eeff;
+      --orange:    #e8711a;
+      --orange-dk: #c45c0e;
+      --white:     #ffffff;
+      --cream:     #fafaf8;
+      --ink:       #1a1a2e;
+      --ink-mid:   #3a3a54;
+      --ink-mute:  #68687e;
+      --border:    #dde2f2;
+      --r:         12px;
+      --r-lg:      20px;
+      --r-xl:      28px;
+      --sh-sm:     0 2px 14px rgba(13,46,138,.08);
+      --sh-md:     0 6px 32px rgba(13,46,138,.13);
+      --sh-lg:     0 14px 52px rgba(13,46,138,.19);
+      --ease:      cubic-bezier(.4,0,.2,1);
+      --t:         .3s;
+    }
+
+    html { scroll-behavior: smooth; -webkit-font-smoothing: antialiased; }
+
+    body {
+      font-family: 'DM Sans', system-ui, sans-serif;
+      color: var(--ink);
+      background: var(--white);
+      line-height: 1.65;
+      overflow-x: hidden;
+    }
+
+    img { max-width: 100%; display: block; }
+    a   { text-decoration: none; }
+
+    /* ═══════════════════════════════════════════
+       UTILITY
+    ═══════════════════════════════════════════ */
+    .wrap {
+      width: 100%;
+      max-width: 1160px;
+      margin: 0 auto;
+      padding: 0 1.25rem;
+    }
+
+    .eyebrow {
+      font-family: 'DM Sans', sans-serif;
+      font-size: .7rem;
+      font-weight: 600;
+      letter-spacing: .15em;
+      text-transform: uppercase;
+      color: var(--orange);
+      display: block;
+      margin-bottom: .55rem;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: .45rem;
+      padding: .8rem 1.85rem;
+      border-radius: 999px;
+      font-family: 'DM Sans', sans-serif;
+      font-size: .95rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition:
+        transform var(--t) var(--ease),
+        box-shadow var(--t) var(--ease),
+        background var(--t) var(--ease),
+        color var(--t) var(--ease),
+        border-color var(--t) var(--ease);
+      border: 2px solid transparent;
+      white-space: nowrap;
+    }
+
+    .btn-orange {
+      background: var(--orange);
+      color: var(--white);
+      box-shadow: 0 4px 22px rgba(232,113,26,.38);
+    }
+    .btn-orange:hover {
+      background: var(--orange-dk);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 32px rgba(232,113,26,.50);
+    }
+    .btn-orange:active { transform: translateY(0); }
+
+    .btn-ghost {
+      background: transparent;
+      color: var(--white);
+      border-color: rgba(255,255,255,.5);
+    }
+    .btn-ghost:hover {
+      background: rgba(255,255,255,.11);
+      border-color: rgba(255,255,255,.9);
+      transform: translateY(-2px);
+    }
+
+    /* ═══════════════════════════════════════════
+       SCROLL-REVEAL
+    ═══════════════════════════════════════════ */
+    .rv {
+      opacity: 0;
+      transform: translateY(26px);
+      transition: opacity .7s var(--ease), transform .7s var(--ease);
+    }
+    .rv.in { opacity: 1; transform: none; }
+    .d1 { transition-delay: .10s; }
+    .d2 { transition-delay: .20s; }
+    .d3 { transition-delay: .30s; }
+    .d4 { transition-delay: .40s; }
+
+    /* ═══════════════════════════════════════════
+       NAV
+    ═══════════════════════════════════════════ */
+    #nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 900;
+      padding: 1.1rem 0;
+      transition: background var(--t), box-shadow var(--t), padding var(--t);
+    }
+    #nav.stuck {
+      background: rgba(255,255,255,.97);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      box-shadow: var(--sh-sm);
+      padding: .6rem 0;
+    }
+
+    .nav-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+    }
+
+    .nav-brand {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-size: 1.45rem;
+      font-weight: 700;
+      color: var(--white);
+      line-height: 1;
+      transition: color var(--t);
+    }
+    #nav.stuck .nav-brand { color: var(--blue-dk); }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 1.75rem;
+      list-style: none;
+    }
+    .nav-links a {
+      font-size: .875rem;
+      font-weight: 500;
+      color: rgba(255,255,255,.85);
+      transition: color var(--t);
+    }
+    #nav.stuck .nav-links a { color: var(--ink-mute); }
+    .nav-links a:hover { color: var(--orange) !important; }
+
+    .nav-pill {
+      padding: .42rem 1.2rem;
+      border-radius: 999px;
+      background: var(--orange);
+      color: var(--white) !important;
+      font-weight: 600;
+      box-shadow: 0 2px 14px rgba(232,113,26,.38);
+      transition: background var(--t), transform var(--t), box-shadow var(--t);
+    }
+    .nav-pill:hover {
+      background: var(--orange-dk) !important;
+      color: var(--white) !important;
+      transform: translateY(-1px);
+      box-shadow: 0 5px 22px rgba(232,113,26,.48);
+    }
+
+    .burger {
+      display: none;
+      flex-direction: column;
+      justify-content: center;
+      gap: 5px;
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: .3rem;
+    }
+    .burger span {
+      display: block;
+      width: 22px; height: 2px;
+      background: var(--white);
+      border-radius: 2px;
+      transition:
+        background var(--t),
+        transform .28s var(--ease),
+        opacity .2s;
+    }
+    #nav.stuck .burger span { background: var(--ink); }
+    .burger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .burger.open span:nth-child(2) { opacity: 0; transform: scaleX(0); }
+    .burger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+    .nav-drawer {
+      overflow: hidden;
+      max-height: 0;
+      background: var(--white);
+      box-shadow: 0 10px 28px rgba(13,46,138,.11);
+      transition: max-height .35s var(--ease);
+    }
+    .nav-drawer.open { max-height: 380px; }
+    .nav-drawer-inner {
+      padding: .5rem 1.25rem 1.5rem;
+      display: flex;
+      flex-direction: column;
+      gap: .05rem;
+    }
+    .nav-drawer a {
+      display: block;
+      padding: .72rem 0;
+      font-size: 1rem;
+      font-weight: 500;
+      color: var(--ink);
+      border-bottom: 1px solid var(--border);
+      transition: color var(--t);
+    }
+    .nav-drawer a:last-of-type { border-bottom: none; }
+    .nav-drawer a:hover { color: var(--orange); }
+    .drawer-cta {
+      margin-top: 1rem;
+      display: block;
+      text-align: center;
+    }
+
+    /* ═══════════════════════════════════════════
+       HERO
+    ═══════════════════════════════════════════ */
+    #hero {
+      position: relative;
+      min-height: 100svh;
+      display: flex;
+      align-items: center;
+      padding: 7rem 0 5.5rem;
+      overflow: hidden;
+      background:
+        radial-gradient(ellipse 80% 65% at 92% 12%, rgba(232,113,26,.24) 0%, transparent 52%),
+        radial-gradient(ellipse 55% 55% at 4% 90%,  rgba(255,255,255,.06) 0%, transparent 55%),
+        linear-gradient(148deg, var(--blue-dk) 0%, var(--blue) 58%, #2a62e8 100%);
+    }
+
+    .hero-ring {
+      position: absolute;
+      border-radius: 50%;
+      pointer-events: none;
+    }
+    .hero-ring-1 {
+      width: 560px; height: 560px;
+      border: 1px solid rgba(255,255,255,.09);
+      right: -150px; top: -150px;
+    }
+    .hero-ring-2 {
+      width: 360px; height: 360px;
+      border: 1px solid rgba(232,113,26,.18);
+      right: 30px; top: 30px;
+    }
+    .hero-ring-3 {
+      width: 180px; height: 180px;
+      border: 1px solid rgba(255,255,255,.12);
+      right: 135px; top: 135px;
+    }
+
+    .hero-wave {
+      position: absolute;
+      bottom: -1px; left: 0; right: 0;
+      line-height: 0;
+    }
+    .hero-wave svg { display: block; width: 100%; }
+
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      max-width: 650px;
+    }
+
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: .5rem;
+      padding: .42rem 1rem .42rem .65rem;
+      border-radius: 999px;
+      background: rgba(255,255,255,.12);
+      border: 1px solid rgba(255,255,255,.24);
+      backdrop-filter: blur(6px);
+      -webkit-backdrop-filter: blur(6px);
+      color: rgba(255,255,255,.9);
+      font-size: .79rem;
+      font-weight: 500;
+      margin-bottom: 1.5rem;
+    }
+    .hero-badge svg {
+      width: 14px; height: 14px;
+      flex-shrink: 0;
+      color: #ffb980;
+    }
+
+    .hero-h1 {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-size: clamp(3.4rem, 8vw, 6.2rem);
+      font-weight: 700;
+      color: var(--white);
+      line-height: 1.02;
+      letter-spacing: -.02em;
+      margin-bottom: .9rem;
+    }
+
+    .hero-tagline {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-size: clamp(1.15rem, 2.8vw, 1.6rem);
+      font-weight: 300;
+      font-style: italic;
+      color: rgba(255,255,255,.8);
+      letter-spacing: .04em;
+      margin-bottom: 1.5rem;
+    }
+    .hero-tagline .dot {
+      font-style: normal;
+      font-weight: 700;
+      color: #ffb060;
+      margin: 0 .25em;
+    }
+
+    .hero-body {
+      font-size: 1.05rem;
+      color: rgba(255,255,255,.73);
+      max-width: 510px;
+      line-height: 1.78;
+      margin-bottom: 2.25rem;
+    }
+
+    .hero-ctas {
+      display: flex;
+      flex-wrap: wrap;
+      gap: .85rem;
+    }
+
+    /* ═══════════════════════════════════════════
+       ABOUT
+    ═══════════════════════════════════════════ */
+    #about {
+      padding: 6rem 0 5.5rem;
+      background: var(--white);
+    }
+
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 3rem;
+      align-items: center;
+    }
+
+    .portrait-wrap { display: flex; justify-content: center; }
+
+    .portrait {
+      position: relative;
+      width: 286px; height: 286px;
+      flex-shrink: 0;
+    }
+    .portrait-ring {
+      position: absolute;
+      inset: -8px;
+      border-radius: 50%;
+      border: 2.5px solid var(--orange);
+      opacity: .38;
+    }
+    .portrait-face {
+      width: 100%; height: 100%;
+      border-radius: 50%;
+      background: linear-gradient(140deg, var(--blue-tint) 0%, #ccd8f8 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .portrait-face svg {
+      width: 115px; height: 115px;
+      color: var(--blue);
+      opacity: .5;
+    }
+
+    .about-copy h2 {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-size: clamp(2.1rem, 4.5vw, 3.3rem);
+      font-weight: 700;
+      color: var(--blue-dk);
+      line-height: 1.08;
+      margin-bottom: 1rem;
+    }
+    .about-copy p {
+      color: var(--ink-mute);
+      font-size: 1.02rem;
+      margin-bottom: .9rem;
+    }
+
+    .chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: .52rem;
+      margin-top: 1.65rem;
+    }
+    .chip {
+      display: inline-flex;
+      align-items: center;
+      gap: .38rem;
+      padding: .32rem .9rem;
+      border-radius: 999px;
+      background: var(--blue-tint);
+      border: 1px solid var(--border);
+      font-size: .8rem;
+      font-weight: 600;
+      color: var(--blue-dk);
+    }
+    .chip svg {
+      width: 12px; height: 12px;
+      color: var(--orange);
+      flex-shrink: 0;
+    }
+
+    /* ═══════════════════════════════════════════
+       SERVICES
+    ═══════════════════════════════════════════ */
+    #services {
+      padding: 5.5rem 0 6.5rem;
+      background: var(--cream);
+    }
+
+    .sec-head {
+      text-align: center;
+      margin-bottom: 3rem;
+    }
+    .sec-head h2 {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-size: clamp(2.1rem, 4.5vw, 3.3rem);
+      font-weight: 700;
+      color: var(--blue-dk);
+      line-height: 1.08;
+      margin-bottom: .7rem;
+    }
+    .sec-head .sub {
+      color: var(--ink-mute);
+      font-size: 1.02rem;
+      max-width: 540px;
+      margin: 0 auto;
+    }
+
+    .cards {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 1.5rem;
+    }
+
+    .card {
+      background: var(--white);
+      border-radius: var(--r-xl);
+      padding: 2.1rem 1.85rem 2.1rem;
+      box-shadow: var(--sh-sm);
+      position: relative;
+      overflow: hidden;
+      transition: transform var(--t) var(--ease), box-shadow var(--t) var(--ease);
+    }
+    .card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, var(--blue) 0%, var(--orange) 100%);
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform var(--t) var(--ease);
+    }
+    .card:hover { transform: translateY(-6px); box-shadow: var(--sh-lg); }
+    .card:hover::before { transform: scaleX(1); }
+
+    .card-icon {
+      width: 52px; height: 52px;
+      border-radius: var(--r);
+      background: linear-gradient(135deg, var(--blue-tint) 0%, #d0dcf8 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 1.25rem;
+    }
+    .card-icon svg { width: 26px; height: 26px; color: var(--blue); }
+
+    .card h3 {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-size: 1.6rem;
+      font-weight: 700;
+      color: var(--blue-dk);
+      line-height: 1.12;
+      margin-bottom: .58rem;
+    }
+    .card-desc {
+      color: var(--ink-mute);
+      font-size: .98rem;
+      line-height: 1.74;
+      margin-bottom: 1.25rem;
+    }
+    .card ul { list-style: none; display: flex; flex-direction: column; gap: .4rem; }
+    .card li {
+      font-size: .88rem;
+      color: var(--ink-mid);
+      display: flex;
+      align-items: flex-start;
+      gap: .55rem;
+    }
+    .card li::before {
+      content: '';
+      display: block;
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      background: var(--orange);
+      flex-shrink: 0;
+      margin-top: .46em;
+    }
+
+    /* ═══════════════════════════════════════════
+       ENQUIRY
+    ═══════════════════════════════════════════ */
+    #enquire {
+      position: relative;
+      padding: 6rem 0 6.5rem;
+      overflow: hidden;
+      background:
+        radial-gradient(ellipse 72% 60% at 96% 4%,  rgba(232,113,26,.23) 0%, transparent 54%),
+        radial-gradient(ellipse 60% 60% at -5% 95%, rgba(255,255,255,.06) 0%, transparent 54%),
+        linear-gradient(155deg, var(--blue-dk) 0%, var(--blue) 100%);
+    }
+
+    .enq-deco {
+      position: absolute;
+      border-radius: 50%;
+      pointer-events: none;
+    }
+    .enq-deco-1 {
+      width: 460px; height: 460px;
+      border: 1px solid rgba(255,255,255,.07);
+      bottom: -200px; left: -180px;
+    }
+    .enq-deco-2 {
+      width: 280px; height: 280px;
+      border: 1px solid rgba(232,113,26,.14);
+      bottom: -80px; left: -60px;
+    }
+
+    .enq-grid {
+      position: relative;
+      z-index: 1;
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 3rem;
+      align-items: start;
+    }
+
+    .enq-copy .eyebrow { color: rgba(255,255,255,.5); }
+    .enq-copy h2 {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-size: clamp(2.1rem, 4.5vw, 3.3rem);
+      font-weight: 700;
+      color: var(--white);
+      line-height: 1.08;
+      margin-bottom: 1rem;
+    }
+    .enq-copy p {
+      color: rgba(255,255,255,.7);
+      font-size: 1.02rem;
+      margin-bottom: .85rem;
+    }
+
+    .enq-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: .65rem;
+      margin-top: 1.65rem;
+    }
+    .enq-list li {
+      display: flex;
+      align-items: center;
+      gap: .6rem;
+      color: rgba(255,255,255,.82);
+      font-size: .95rem;
+    }
+    .enq-list svg { width: 16px; height: 16px; color: #ffb060; flex-shrink: 0; }
+
+    /* form card */
+    .form-card {
+      background: var(--white);
+      border-radius: var(--r-xl);
+      padding: 2.25rem 2.1rem;
+      box-shadow: var(--sh-lg);
+    }
+
+    .fg { display: flex; flex-direction: column; gap: .42rem; margin-bottom: 1.05rem; }
+    .fg:last-child { margin-bottom: 0; }
+
+    .fg-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+    }
+
+    label {
+      font-size: .82rem;
+      font-weight: 600;
+      color: var(--ink);
+      letter-spacing: .02em;
+    }
+    label .opt {
+      font-weight: 400;
+      color: var(--ink-mute);
+      margin-left: .2em;
+    }
+
+    input[type=text],
+    input[type=email],
+    input[type=tel],
+    select,
+    textarea {
+      padding: .72rem 1rem;
+      border: 1.5px solid var(--border);
+      border-radius: var(--r);
+      font-family: 'DM Sans', sans-serif;
+      font-size: .95rem;
+      color: var(--ink);
+      background: var(--white);
+      outline: none;
+      width: 100%;
+      transition: border-color var(--t), box-shadow var(--t);
+    }
+    input::placeholder, textarea::placeholder { color: #b2b2c8; }
+    input:focus, select:focus, textarea:focus {
+      border-color: var(--blue);
+      box-shadow: 0 0 0 3px rgba(26,79,219,.10);
+    }
+    textarea { resize: vertical; min-height: 112px; line-height: 1.6; }
+    select {
+      appearance: none;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%2368687e' stroke-width='2'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right .9rem center;
+      padding-right: 2.75rem;
+      cursor: pointer;
+    }
+
+    .form-actions {
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+      margin-top: 1.1rem;
+    }
+    .form-actions .btn { flex: 1; min-width: 140px; }
+    .form-note {
+      font-size: .77rem;
+      color: var(--ink-mute);
+      line-height: 1.45;
+    }
+
+    .form-success {
+      display: none;
+      text-align: center;
+      padding: 1.75rem 1rem;
+    }
+    .success-icon {
+      width: 68px; height: 68px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #e8f5e9, #c8e6c9);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 1.3rem;
+    }
+    .success-icon svg { width: 34px; height: 34px; color: #2e7d32; }
+    .form-success h3 {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-size: 1.85rem;
+      color: var(--blue-dk);
+      margin-bottom: .45rem;
+    }
+    .form-success p { color: var(--ink-mute); }
+
+    /* ═══════════════════════════════════════════
+       FOOTER
+    ═══════════════════════════════════════════ */
+    footer {
+      background: var(--blue-dk);
+      padding: 2.75rem 0;
+    }
+    .foot-inner {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: .7rem;
+      text-align: center;
+    }
+    .foot-brand {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-size: 1.62rem;
+      font-weight: 700;
+      color: var(--white);
+    }
+    .foot-tagline {
+      font-size: .82rem;
+      font-style: italic;
+      letter-spacing: .06em;
+      color: rgba(255,255,255,.42);
+    }
+    .foot-hr {
+      width: 220px; height: 1px;
+      background: rgba(255,255,255,.1);
+      border: none;
+    }
+    .foot-copy { font-size: .79rem; color: rgba(255,255,255,.38); }
+
+    /* ═══════════════════════════════════════════
+       RESPONSIVE
+    ═══════════════════════════════════════════ */
+    @media (min-width: 600px) {
+      .cards { grid-template-columns: repeat(2, 1fr); }
+    }
+
+    @media (min-width: 960px) {
+      .burger    { display: none !important; }
+      .nav-links { display: flex !important; }
+      .nav-drawer{ display: none !important; }
+
+      #hero { padding: 9rem 0 7rem; }
+
+      .about-grid {
+        grid-template-columns: 304px 1fr;
+        gap: 4.5rem;
+      }
+
+      .cards { grid-template-columns: repeat(3, 1fr); }
+
+      .enq-grid {
+        grid-template-columns: 1fr 1fr;
+        gap: 5rem;
+        align-items: center;
+      }
+    }
+
+    @media (max-width: 959px) {
+      .burger    { display: flex; }
+      .nav-links { display: none;  }
+    }
+
+    @media (max-width: 599px) {
+      .fg-row { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ══════════ NAV ══════════ -->
+<header id="nav">
+  <div class="wrap">
+    <div class="nav-inner">
+
+      <a href="#hero" class="nav-brand">HomeStep Physio</a>
+
+      <nav aria-label="Primary">
+        <ul class="nav-links">
+          <li><a href="#about">About Emma</a></li>
+          <li><a href="#services">Services</a></li>
+          <li><a href="#enquire" class="nav-pill">Get in Touch</a></li>
+        </ul>
+      </nav>
+
+      <button class="burger" id="burger" aria-label="Open navigation" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+
+    </div>
+  </div>
+
+  <nav class="nav-drawer" id="drawer" aria-label="Mobile">
+    <div class="nav-drawer-inner">
+      <a href="#about"    class="dl">About Emma</a>
+      <a href="#services" class="dl">Services</a>
+      <a href="#enquire"  class="btn btn-orange drawer-cta dl">Get in Touch</a>
+    </div>
+  </nav>
+</header>
+
+
+<!-- ══════════ HERO ══════════ -->
+<section id="hero" aria-labelledby="hero-h1">
+  <span class="hero-ring hero-ring-1" aria-hidden="true"></span>
+  <span class="hero-ring hero-ring-2" aria-hidden="true"></span>
+  <span class="hero-ring hero-ring-3" aria-hidden="true"></span>
+
+  <div class="wrap">
+    <div class="hero-content">
+
+      <div class="hero-badge rv">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+          <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+        </svg>
+        Qualified Physiotherapist &amp; Reiki Practitioner
+      </div>
+
+      <h1 class="hero-h1 rv d1" id="hero-h1">HomeStep<br>Physio</h1>
+
+      <p class="hero-tagline rv d2">
+        Bringing<span class="dot">·</span>Movement<span class="dot">·</span>Home
+      </p>
+
+      <p class="hero-body rv d3">
+        Physiotherapist-led movement and wellbeing, brought to you at home.
+        Expert support for strength, balance, recovery, and holistic wellness —
+        by Emma Harte, Chartered Physiotherapist.
+      </p>
+
+      <div class="hero-ctas rv d4">
+        <a href="#enquire" class="btn btn-orange">Make an Enquiry</a>
+        <a href="#services" class="btn btn-ghost">Our Services</a>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="hero-wave" aria-hidden="true">
+    <svg viewBox="0 0 1440 70" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0,35 C400,75 1040,-5 1440,35 L1440,70 L0,70 Z" fill="#ffffff"/>
+    </svg>
+  </div>
+</section>
+
+
+<!-- ══════════ ABOUT ══════════ -->
+<section id="about" aria-labelledby="about-h2">
+  <div class="wrap">
+    <div class="about-grid">
+
+      <div class="portrait-wrap rv">
+        <div class="portrait" aria-hidden="true">
+          <span class="portrait-ring"></span>
+          <div class="portrait-face">
+            <!-- Replace with <img src="emma.jpg" alt="Emma Harte, Chartered Physiotherapist" /> -->
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1">
+              <circle cx="12" cy="7.5" r="4.5"/>
+              <path d="M3.5 21c0-4.7 3.8-8 8.5-8s8.5 3.3 8.5 8"/>
+            </svg>
+          </div>
+        </div>
+      </div>
+
+      <div class="about-copy">
+        <span class="eyebrow rv">About</span>
+        <h2 id="about-h2" class="rv d1">Meet Emma Harte</h2>
+        <p class="rv d1">
+          Emma is a Chartered Physiotherapist with years of hands-on experience
+          supporting older adults, people recovering from injury or surgery, and
+          anyone wanting to move with more confidence and ease.
+        </p>
+        <p class="rv d2">
+          Her approach is warm, unhurried, and truly person-centred — treating
+          the whole person rather than just the presenting condition. By coming to
+          you at home, Emma removes the stress of travel and unfamiliar
+          environments, so you can focus entirely on recovery and wellbeing.
+        </p>
+        <p class="rv d2">
+          Alongside her clinical practice, Emma is a trained Reiki practitioner,
+          integrating complementary energy-based therapy for those who would
+          benefit from a more holistic approach to healing.
+        </p>
+        <div class="chips">
+          <span class="chip rv d1">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+            Chartered Physiotherapist
+          </span>
+          <span class="chip rv d2">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+            Older Adults Specialist
+          </span>
+          <span class="chip rv d2">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+            Reiki Practitioner
+          </span>
+          <span class="chip rv d3">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+            Home Visit Service
+          </span>
+          <span class="chip rv d3">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+            Post-Surgical Rehab
+          </span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+<!-- ══════════ SERVICES ══════════ -->
+<section id="services" aria-labelledby="services-h2">
+  <div class="wrap">
+
+    <div class="sec-head">
+      <span class="eyebrow rv">What We Offer</span>
+      <h2 id="services-h2" class="rv d1">Our Services</h2>
+      <p class="sub rv d2">
+        Every service is delivered in your own home — tailored to you, at your
+        own pace, with expert guidance every step of the way.
+      </p>
+    </div>
+
+    <div class="cards">
+
+      <article class="card rv">
+        <div class="card-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75">
+            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+            <circle cx="9" cy="7" r="4"/>
+            <path d="M23 21v-2a4 4 0 0 0-3-3.87"/>
+            <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+          </svg>
+        </div>
+        <h3>Gentle Strength &amp; Balance</h3>
+        <p class="card-desc">
+          Small-group classes focused on functional strength and balance —
+          keeping you steady, independent, and confident in daily life.
+        </p>
+        <ul>
+          <li>For older adults and those in recovery</li>
+          <li>Physiotherapist-led, evidence-based</li>
+          <li>Fall prevention and confidence building</li>
+          <li>Warm, welcoming group environment</li>
+        </ul>
+      </article>
+
+      <article class="card rv d1">
+        <div class="card-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75">
+            <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
+            <polyline points="9 22 9 12 15 12 15 22"/>
+          </svg>
+        </div>
+        <h3>Private Home Physiotherapy</h3>
+        <p class="card-desc">
+          One-to-one physiotherapy in the comfort of your home — no travel,
+          no waiting rooms, just expert hands-on care precisely tailored to you.
+        </p>
+        <ul>
+          <li>Full assessment and personalised treatment plan</li>
+          <li>Post-surgical and orthopaedic rehabilitation</li>
+          <li>Musculoskeletal pain and injury</li>
+          <li>Mobility, posture, and independence</li>
+        </ul>
+      </article>
+
+      <article class="card rv d2">
+        <div class="card-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75">
+            <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+          </svg>
+        </div>
+        <h3>Holistic Wellbeing &amp; Reiki</h3>
+        <p class="card-desc">
+          An integrative approach blending physiotherapy with Reiki therapy —
+          nurturing body, mind, and spirit in the calm of your own home.
+        </p>
+        <ul>
+          <li>Reiki energy therapy at home</li>
+          <li>Stress relief and deep relaxation</li>
+          <li>Complements physiotherapy treatment</li>
+          <li>Restorative holistic wellness</li>
+        </ul>
+      </article>
+
+    </div>
+  </div>
+</section>
+
+
+<!-- ══════════ ENQUIRY FORM ══════════ -->
+<section id="enquire" aria-labelledby="enquire-h2">
+  <span class="enq-deco enq-deco-1" aria-hidden="true"></span>
+  <span class="enq-deco enq-deco-2" aria-hidden="true"></span>
+
+  <div class="wrap">
+    <div class="enq-grid">
+
+      <div class="enq-copy">
+        <span class="eyebrow rv">Get in Touch</span>
+        <h2 id="enquire-h2" class="rv d1">Ready to take the<br>first step?</h2>
+        <p class="rv d2">
+          Whether you'd like to find out more, ask a question, or book your first
+          session — we'd love to hear from you.
+        </p>
+        <p class="rv d2">
+          Fill in the form and Emma will respond personally, usually within one
+          working day.
+        </p>
+        <ul class="enq-list rv d3" aria-label="Why get in touch">
+          <li>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+            Free initial enquiry — no obligation
+          </li>
+          <li>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+            Home visits across the local area
+          </li>
+          <li>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+            Prompt, personal response from Emma
+          </li>
+        </ul>
+      </div>
+
+      <div class="rv d1">
+        <div class="form-card">
+
+          <form id="enquiryForm" novalidate
+                action="https://formspree.io/f/REPLACE_WITH_ID"
+                method="POST">
+
+            <div class="fg-row">
+              <div class="fg">
+                <label for="fname">Your name</label>
+                <input type="text" id="fname" name="name"
+                       placeholder="Jane Smith"
+                       required autocomplete="name" />
+              </div>
+              <div class="fg">
+                <label for="femail">Email address</label>
+                <input type="email" id="femail" name="email"
+                       placeholder="jane@example.com"
+                       required autocomplete="email" />
+              </div>
+            </div>
+
+            <div class="fg">
+              <label for="fphone">Phone number <span class="opt">(optional)</span></label>
+              <input type="tel" id="fphone" name="phone"
+                     placeholder="07700 900000"
+                     autocomplete="tel" />
+            </div>
+
+            <div class="fg">
+              <label for="finterest">I'm interested in…</label>
+              <select id="finterest" name="interest" required>
+                <option value="" disabled selected>Please select a service</option>
+                <option value="strength-balance">Gentle Strength &amp; Balance Class</option>
+                <option value="home-physio">Private Home Physiotherapy</option>
+                <option value="reiki">Holistic Wellbeing &amp; Reiki</option>
+                <option value="general">General enquiry</option>
+              </select>
+            </div>
+
+            <div class="fg">
+              <label for="fmessage">Message <span class="opt">(optional)</span></label>
+              <textarea id="fmessage" name="message"
+                        placeholder="Tell us a little about what you're looking for…"></textarea>
+            </div>
+
+            <div class="form-actions">
+              <button type="submit" class="btn btn-orange" id="submitBtn">
+                Send Enquiry
+              </button>
+              <p class="form-note">We'll never share your details<br>with third parties.</p>
+            </div>
+
+          </form>
+
+          <div class="form-success" id="formSuccess" role="status" aria-live="polite">
+            <div class="success-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                <polyline points="20 6 9 17 4 12"/>
+              </svg>
+            </div>
+            <h3>Thank you!</h3>
+            <p>Your enquiry has been sent. Emma will be in touch with you very soon.</p>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+<!-- ══════════ FOOTER ══════════ -->
+<footer>
+  <div class="wrap">
+    <div class="foot-inner">
+      <span class="foot-brand">HomeStep Physio</span>
+      <span class="foot-tagline">Bringing · Movement · Home</span>
+      <hr class="foot-hr" />
+      <p class="foot-copy">
+        &copy; <span id="yr"></span> HomeStep Physio &mdash; Emma Harte, Chartered Physiotherapist.
+        All rights reserved.
+      </p>
+    </div>
+  </div>
+</footer>
+
+
+<script>
+  /* year */
+  document.getElementById('yr').textContent = new Date().getFullYear();
+
+  /* nav stuck / scroll */
+  const nav  = document.getElementById('nav');
+  const tick = () => nav.classList.toggle('stuck', window.scrollY > 45);
+  window.addEventListener('scroll', tick, { passive: true });
+  tick();
+
+  /* hamburger */
+  const burger = document.getElementById('burger');
+  const drawer = document.getElementById('drawer');
+
+  burger.addEventListener('click', () => {
+    const open = drawer.classList.toggle('open');
+    burger.classList.toggle('open', open);
+    burger.setAttribute('aria-expanded', String(open));
+  });
+
+  document.querySelectorAll('.dl').forEach(a => {
+    a.addEventListener('click', () => {
+      drawer.classList.remove('open');
+      burger.classList.remove('open');
+      burger.setAttribute('aria-expanded', 'false');
+    });
+  });
+
+  /* scroll-reveal */
+  const els = document.querySelectorAll('.rv');
+  const io  = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); }
+    });
+  }, { threshold: 0.10, rootMargin: '0px 0px -32px 0px' });
+
+  els.forEach(el => io.observe(el));
+
+  /* hero fires immediately */
+  document.querySelectorAll('#hero .rv').forEach(el => el.classList.add('in'));
+
+  /* Formspree AJAX */
+  const form    = document.getElementById('enquiryForm');
+  const success = document.getElementById('formSuccess');
+  const btn     = document.getElementById('submitBtn');
+
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+
+    const name     = form.querySelector('[name=name]');
+    const email    = form.querySelector('[name=email]');
+    const interest = form.querySelector('[name=interest]');
+
+    if (!name.value.trim())  { name.focus();     return; }
+    if (!email.value.trim()) { email.focus();    return; }
+    if (!interest.value)     { interest.focus(); return; }
+
+    const orig    = btn.textContent;
+    btn.textContent = 'Sending…';
+    btn.disabled    = true;
+
+    try {
+      const res = await fetch(form.action, {
+        method:  'POST',
+        body:    new FormData(form),
+        headers: { Accept: 'application/json' }
+      });
+
+      if (res.ok) {
+        form.style.display    = 'none';
+        success.style.display = 'block';
+      } else {
+        btn.textContent = 'Something went wrong — try again';
+        btn.disabled    = false;
+      }
+    } catch {
+      btn.textContent = 'Network error — please try again';
+      btn.disabled    = false;
+    }
+  });
+</script>
+</body>
+</html>
