@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>HomeStep Physio — Bringing Movement Home</title>
-  <meta name="description" content="Physiotherapist-led movement and wellbeing in your own home. Gentle strength and balance classes, private home physiotherapy, and holistic wellbeing with Reiki — by Emma Harte, Qualified Physiotherapist." />
+  <meta name="description" content="HomeStep Physio — expert home-based physiotherapy, movement classes, and holistic wellbeing serving Westmorland and Furness and the surrounding area. BSc (Hons) Physiotherapist Emma Harte offers personalised rehabilitation, Reiki, cupping, and massage in the comfort of your own home." />
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -819,6 +819,176 @@
     @media (max-width: 599px) {
       .fg-row { grid-template-columns: 1fr; }
     }
+
+    /* ═══════════════════════════════════════════
+       TRUST BAR
+    ═══════════════════════════════════════════ */
+    #trust {
+      background: var(--blue-pale);
+      border-bottom: 1px solid var(--border);
+      padding: 1.25rem 0;
+    }
+    .trust-items {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      align-items: center;
+      gap: .75rem 2.25rem;
+    }
+    .trust-item {
+      display: flex;
+      align-items: center;
+      gap: .45rem;
+      font-size: .81rem;
+      font-weight: 600;
+      color: var(--blue-dk);
+      white-space: nowrap;
+    }
+    .trust-item svg { width: 14px; height: 14px; color: var(--orange); flex-shrink: 0; }
+    .trust-sep { color: var(--border); font-size: 1.1rem; line-height: 1; }
+
+    /* ═══════════════════════════════════════════
+       ABOUT — FOUNDER LABEL
+    ═══════════════════════════════════════════ */
+    .founder-label {
+      font-size: .75rem;
+      font-weight: 600;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      color: var(--ink-mute);
+      margin-bottom: .2rem;
+    }
+
+    /* ═══════════════════════════════════════════
+       CONDITIONS
+    ═══════════════════════════════════════════ */
+    #conditions {
+      padding: 5rem 0 5.5rem;
+      background: var(--white);
+    }
+    .condition-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: .65rem;
+      justify-content: center;
+      margin-top: 2.25rem;
+    }
+    .ctag {
+      display: inline-flex;
+      align-items: center;
+      padding: .5rem 1.15rem;
+      border-radius: 999px;
+      border: 1.5px solid var(--border);
+      background: var(--white);
+      font-size: .88rem;
+      font-weight: 500;
+      color: var(--ink-mid);
+      cursor: default;
+      transition: background var(--t), border-color var(--t), color var(--t), transform var(--t);
+    }
+    .ctag:hover {
+      background: var(--blue-tint);
+      border-color: var(--blue);
+      color: var(--blue-dk);
+      transform: translateY(-2px);
+    }
+
+    /* ═══════════════════════════════════════════
+       FAQ
+    ═══════════════════════════════════════════ */
+    #faq { padding: 5.5rem 0 6rem; background: var(--cream); }
+    .faq-list {
+      max-width: 800px;
+      margin: 2.5rem auto 0;
+      display: flex;
+      flex-direction: column;
+      gap: .7rem;
+    }
+    .faq-item {
+      background: var(--white);
+      border-radius: var(--r-lg);
+      border: 1.5px solid var(--border);
+      overflow: hidden;
+      transition: box-shadow var(--t), border-color var(--t);
+    }
+    .faq-item.open { box-shadow: var(--sh-sm); border-color: rgba(26,79,219,.2); }
+    .faq-q {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      width: 100%;
+      padding: 1.1rem 1.35rem;
+      background: none;
+      border: none;
+      cursor: pointer;
+      font-family: 'DM Sans', sans-serif;
+      font-size: .97rem;
+      font-weight: 600;
+      color: var(--ink);
+      text-align: left;
+      transition: color var(--t);
+    }
+    .faq-q:hover { color: var(--blue); }
+    .faq-chevron {
+      width: 18px; height: 18px;
+      flex-shrink: 0;
+      color: var(--orange);
+      transition: transform .3s var(--ease);
+    }
+    .faq-item.open .faq-chevron { transform: rotate(180deg); }
+    .faq-body {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height .38s var(--ease);
+    }
+    .faq-item.open .faq-body { max-height: 320px; }
+    .faq-body-inner {
+      padding: .85rem 1.35rem 1.25rem;
+      border-top: 1px solid var(--border);
+    }
+    .faq-body-inner p {
+      font-size: .95rem;
+      color: var(--ink-mute);
+      line-height: 1.72;
+      margin: 0;
+    }
+
+    /* ═══════════════════════════════════════════
+       MOBILE STICKY CTA
+    ═══════════════════════════════════════════ */
+    .sticky-cta {
+      position: fixed;
+      bottom: 1.5rem;
+      right: 1.5rem;
+      z-index: 800;
+      display: none;
+    }
+    .sticky-cta a {
+      display: inline-flex;
+      align-items: center;
+      gap: .45rem;
+      padding: .78rem 1.5rem;
+      border-radius: 999px;
+      background: var(--orange);
+      color: var(--white);
+      font-family: 'DM Sans', sans-serif;
+      font-size: .9rem;
+      font-weight: 600;
+      box-shadow: 0 6px 24px rgba(232,113,26,.5);
+      text-decoration: none;
+      transition: background var(--t), transform var(--t), box-shadow var(--t);
+    }
+    .sticky-cta a:hover {
+      background: var(--orange-dk);
+      transform: translateY(-2px);
+      box-shadow: 0 10px 32px rgba(232,113,26,.6);
+    }
+    .sticky-cta svg { width: 15px; height: 15px; flex-shrink: 0; }
+
+    @media (max-width: 959px) {
+      .sticky-cta { display: block; }
+    }
   </style>
 </head>
 <body>
@@ -888,9 +1058,9 @@
       </p>
 
       <p class="hero-body rv d4">
-        HomeStep Physio provides expert home-based physiotherapy and welcoming movement classes
-        that support strength, balance, recovery, mobility and holistic wellbeing —
-        helping you move with greater confidence.
+        Expert home-based physiotherapy and welcoming movement classes supporting strength,
+        balance, recovery, and holistic wellbeing — serving Westmorland and Furness
+        and the surrounding area.
       </p>
 
       <div class="hero-ctas rv d4">
@@ -907,6 +1077,59 @@
     </svg>
   </div>
 </section>
+
+
+<!-- ══════════ TRUST BAR ══════════ -->
+<div id="trust" role="list" aria-label="Credentials and qualifications">
+  <div class="wrap">
+    <div class="trust-items">
+
+      <div class="trust-item" role="listitem">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+          <path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/>
+        </svg>
+        BSc (Hons) Physiotherapist
+      </div>
+
+      <span class="trust-sep" aria-hidden="true">·</span>
+
+      <div class="trust-item" role="listitem">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+          <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+        </svg>
+        HCPC Registered
+      </div>
+
+      <span class="trust-sep" aria-hidden="true">·</span>
+
+      <div class="trust-item" role="listitem">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+          <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+        </svg>
+        Reiki &amp; Holistic Practitioner
+      </div>
+
+      <span class="trust-sep" aria-hidden="true">·</span>
+
+      <div class="trust-item" role="listitem">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+          <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/>
+        </svg>
+        Home Visits Across the Region
+      </div>
+
+      <span class="trust-sep" aria-hidden="true">·</span>
+
+      <div class="trust-item" role="listitem">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+          <circle cx="12" cy="12" r="10"/><path d="M8 14s1.5 2 4 2 4-2 4-2"/><line x1="9" y1="9" x2="9.01" y2="9"/><line x1="15" y1="9" x2="15.01" y2="9"/>
+        </svg>
+        Cupping Therapy &amp; Massage
+      </div>
+
+    </div>
+  </div>
+</div>
 
 
 <!-- ══════════ ABOUT ══════════ -->
@@ -926,42 +1149,59 @@
 
       <div class="about-copy">
         <span class="eyebrow rv">About</span>
+        <p class="founder-label rv">Emma Harte — Founder</p>
         <h2 id="about-h2" class="rv d1">Meet Emma Harte</h2>
         <p class="rv d1">
-          Emma Harte is a BSc Hons qualified physiotherapist specialising in supporting adults
-          in the community through personalised rehabilitation.
+          Emma Harte is a qualified BSc (Hons) Physiotherapist specialising in personalised
+          rehabilitation and community-based support for adults of all ages and abilities.
         </p>
         <p class="rv d2">
-          Her approach is warm, unhurried, and truly person-centred — treating
-          the whole person rather than just the presenting condition. By coming to
-          you at home, Emma removes the stress of travel and unfamiliar
-          environments, so you can focus entirely on recovery and wellbeing.
+          With years of clinical experience, Emma combines professional expertise with
+          compassionate, motivating care — helping individuals recovering from injury,
+          illness, surgery, or deconditioning to improve their strength, balance, mobility,
+          confidence, and overall wellbeing.
         </p>
         <p class="rv d2">
-          Alongside her clinical practice, Emma is a trained Reiki practitioner,
-          integrating complementary energy-based therapy for those who would
-          benefit from a more holistic approach to healing.
+          At HomeStep Physio, Emma takes a holistic, person-centred approach, recognising
+          that recovery is about more than physical rehabilitation alone. Through home-based
+          treatment and welcoming movement classes, she creates an inclusive and encouraging
+          environment where individuals feel comfortable, empowered, and motivated throughout
+          their journey.
+        </p>
+        <p class="rv d3">
+          Emma is passionate about promoting independence, confidence, and healthier movement
+          within both the home and wider community — helping people feel stronger, more
+          capable, and better connected to their wellbeing.
+        </p>
+        <p class="rv d3">
+          Alongside her physiotherapy practice, Emma is also a trained holistic practitioner,
+          offering complementary therapies including Reiki, cupping therapy, and massage to
+          support relaxation, stress reduction, recovery, and overall wellbeing.
         </p>
         <div class="chips">
           <span class="chip rv d1">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
-            Degree-Qualified Physiotherapist
+            BSc (Hons) Physiotherapist
           </span>
-          <span class="chip rv d2">
+          <span class="chip rv d1">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
-            Older Adults Specialist
+            HCPC Registered
           </span>
           <span class="chip rv d2">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
             Reiki Practitioner
           </span>
-          <span class="chip rv d3">
+          <span class="chip rv d2">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
-            Home Visit Service
+            Cupping Therapy
           </span>
           <span class="chip rv d3">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
-            Post-Surgical Rehab
+            Massage
+          </span>
+          <span class="chip rv d3">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+            Home Visit Service
           </span>
         </div>
       </div>
@@ -1046,6 +1286,122 @@
           <li>Restorative holistic wellness</li>
         </ul>
       </article>
+
+    </div>
+  </div>
+</section>
+
+
+<!-- ══════════ CONDITIONS ══════════ -->
+<section id="conditions" aria-labelledby="conditions-h2">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="eyebrow rv">How I Can Help</span>
+      <h2 id="conditions-h2" class="rv d1">Conditions &amp; Areas of Support</h2>
+      <p class="sub rv d2">
+        Whether you're recovering from surgery, managing a long-term condition, or
+        simply looking to move more freely — Emma has the experience to help.
+      </p>
+    </div>
+    <div class="condition-tags rv d1">
+      <span class="ctag">Back &amp; Neck Pain</span>
+      <span class="ctag">Post-Surgery Recovery</span>
+      <span class="ctag">Falls Prevention</span>
+      <span class="ctag">Balance &amp; Mobility</span>
+      <span class="ctag">Stroke Rehabilitation</span>
+      <span class="ctag">Musculoskeletal Injury</span>
+      <span class="ctag">Joint Pain &amp; Arthritis</span>
+      <span class="ctag">Post-Covid Recovery</span>
+      <span class="ctag">Deconditioning</span>
+      <span class="ctag">Stress &amp; Anxiety</span>
+      <span class="ctag">Sports Injury</span>
+      <span class="ctag">General Wellbeing</span>
+    </div>
+  </div>
+</section>
+
+
+<!-- ══════════ FAQ ══════════ -->
+<section id="faq" aria-labelledby="faq-h2">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="eyebrow rv">FAQs</span>
+      <h2 id="faq-h2" class="rv d1">Frequently Asked Questions</h2>
+      <p class="sub rv d2">Everything you need to know before getting in touch.</p>
+    </div>
+    <div class="faq-list">
+
+      <div class="faq-item rv">
+        <button class="faq-q" aria-expanded="false">
+          Do I need a GP referral to see Emma?
+          <svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg>
+        </button>
+        <div class="faq-body" role="region">
+          <div class="faq-body-inner">
+            <p>No — you can book directly without a referral. Emma will carry out a full assessment at your first appointment.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="faq-item rv">
+        <button class="faq-q" aria-expanded="false">
+          Where do you cover?
+          <svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg>
+        </button>
+        <div class="faq-body" role="region">
+          <div class="faq-body-inner">
+            <p>Emma offers home visits and classes across the local area. Contact us to check availability in your location.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="faq-item rv">
+        <button class="faq-q" aria-expanded="false">
+          How much does it cost?
+          <svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg>
+        </button>
+        <div class="faq-body" role="region">
+          <div class="faq-body-inner">
+            <p>Prices vary depending on the service. Please get in touch for a personalised quote — the initial enquiry is completely free.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="faq-item rv">
+        <button class="faq-q" aria-expanded="false">
+          What should I expect from my first session?
+          <svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg>
+        </button>
+        <div class="faq-body" role="region">
+          <div class="faq-body-inner">
+            <p>Emma will carry out a thorough assessment, discuss your goals, and create a personalised plan tailored to your needs. Sessions are relaxed, unhurried, and centred around you.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="faq-item rv">
+        <button class="faq-q" aria-expanded="false">
+          Is physiotherapy covered by private health insurance?
+          <svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg>
+        </button>
+        <div class="faq-body" role="region">
+          <div class="faq-body-inner">
+            <p>Many private health insurers cover physiotherapy. Check your policy or contact your insurer — Emma can provide receipts and treatment notes to support your claim.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="faq-item rv">
+        <button class="faq-q" aria-expanded="false">
+          What holistic therapies does Emma offer?
+          <svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg>
+        </button>
+        <div class="faq-body" role="region">
+          <div class="faq-body-inner">
+            <p>Alongside physiotherapy, Emma offers Reiki, cupping therapy, and massage — all delivered in the comfort of your home.</p>
+          </div>
+        </div>
+      </div>
 
     </div>
   </div>
@@ -1176,6 +1532,17 @@
 </footer>
 
 
+<!-- ══════════ MOBILE STICKY CTA ══════════ -->
+<div class="sticky-cta" aria-label="Book now">
+  <a href="#enquire">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+      <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.61 1h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.6a16 16 0 0 0 6 6l.96-.96a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 21.46 16z"/>
+    </svg>
+    Book Now
+  </a>
+</div>
+
+
 <script>
   /* year */
   document.getElementById('yr').textContent = new Date().getFullYear();
@@ -1255,6 +1622,22 @@
       btn.textContent = 'Network error — please try again';
       btn.disabled    = false;
     }
+  });
+
+  /* FAQ accordion */
+  document.querySelectorAll('.faq-item').forEach(item => {
+    const q = item.querySelector('.faq-q');
+    q.addEventListener('click', () => {
+      const isOpen = item.classList.contains('open');
+      document.querySelectorAll('.faq-item').forEach(i => {
+        i.classList.remove('open');
+        i.querySelector('.faq-q').setAttribute('aria-expanded', 'false');
+      });
+      if (!isOpen) {
+        item.classList.add('open');
+        q.setAttribute('aria-expanded', 'true');
+      }
+    });
   });
 </script>
 </body>
