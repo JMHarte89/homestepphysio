@@ -989,6 +989,67 @@
     @media (max-width: 959px) {
       .sticky-cta { display: block; }
     }
+
+    /* ═══════════════════════════════════════════
+       POSTCODE CHECKER
+    ═══════════════════════════════════════════ */
+    .coverage-note {
+      font-size: .82rem;
+      color: var(--ink-mute);
+      line-height: 1.55;
+      margin-bottom: 1.1rem;
+    }
+
+    .pc-row {
+      display: flex;
+      gap: .6rem;
+      align-items: flex-start;
+    }
+    .pc-row input[type=text] {
+      flex: 1;
+      font-size: 1rem;
+      text-transform: uppercase;
+    }
+    .pc-row input[type=text]::placeholder { text-transform: none; }
+    .btn-check {
+      padding: .72rem 1.15rem;
+      border-radius: var(--r);
+      background: var(--blue);
+      color: var(--white);
+      font-family: 'DM Sans', sans-serif;
+      font-size: .9rem;
+      font-weight: 600;
+      border: none;
+      cursor: pointer;
+      white-space: nowrap;
+      flex-shrink: 0;
+      transition: background var(--t), transform var(--t);
+    }
+    .btn-check:hover  { background: var(--blue-mid); transform: translateY(-1px); }
+    .btn-check:active { transform: translateY(0); }
+    .btn-check:disabled { opacity: .6; cursor: not-allowed; transform: none; }
+
+    .pc-status {
+      display: none;
+      font-size: .88rem;
+      line-height: 1.55;
+      padding: .65rem .95rem;
+      border-radius: var(--r);
+      margin-top: .5rem;
+      border: 1.5px solid transparent;
+    }
+    .pc-status.visible     { display: block; }
+    .pc-status.pc-in       { background: #f0faf0; border-color: #6dbf6d; color: #2a6e2a; }
+    .pc-status.pc-border   { background: #fff8ed; border-color: #f5b742; color: #7a5000; }
+    .pc-status.pc-out      { background: #fff2f2; border-color: #e57373; color: #7a1f1f; }
+    .pc-status.pc-error    { background: #fff8ed; border-color: #f5b742; color: #7a5000; }
+    .pc-status.pc-loading  { background: var(--blue-pale); border-color: var(--border); color: var(--ink-mute); }
+
+    .pc-divider {
+      border: none;
+      border-top: 1.5px solid var(--border);
+      margin: 1.25rem 0;
+    }
   </style>
 </head>
 <body>
@@ -1345,12 +1406,12 @@
 
       <div class="faq-item rv">
         <button class="faq-q" aria-expanded="false">
-          Where do you cover?
+          What areas do you cover?
           <svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg>
         </button>
         <div class="faq-body" role="region">
           <div class="faq-body-inner">
-            <p>Emma offers home visits and classes across the local area. Contact us to check availability in your location.</p>
+            <p>HomeStep Physio is based in Failsworth and covers a wide area across North Manchester and Oldham including Failsworth, Oldham, Middleton, Chadderton, Droylsden, Ashton-under-Lyne, Royton, Newton Heath, Moston, Clayton, Hollinwood and surrounding areas. Not sure if we cover you? Use the postcode checker in the enquiry form and we'll confirm instantly.</p>
           </div>
         </div>
       </div>
@@ -1449,6 +1510,23 @@
           <form id="enquiryForm" novalidate
                 action="https://formspree.io/f/maqvarzk"
                 method="POST">
+
+            <p class="coverage-note">We cover Failsworth, Oldham, Middleton, Chadderton, Droylsden and surrounding areas — not sure? Check your postcode below.</p>
+
+            <div class="fg">
+              <label for="fpostcode">Check your postcode</label>
+              <div class="pc-row">
+                <input type="text" id="fpostcode" name="postcode"
+                       placeholder="e.g. M35 or OL8 3BA"
+                       maxlength="8"
+                       autocomplete="postal-code"
+                       aria-describedby="pc-result" />
+                <button type="button" class="btn-check" id="pcBtn">Check</button>
+              </div>
+              <div class="pc-status" id="pc-result" role="status" aria-live="polite" aria-atomic="true"></div>
+            </div>
+
+            <hr class="pc-divider" aria-hidden="true" />
 
             <div class="fg-row">
               <div class="fg">
@@ -1623,6 +1701,108 @@
       btn.disabled    = false;
     }
   });
+
+  /* ── Postcode Area Checker ── */
+  (function () {
+    var HOME_LAT = 53.5081;
+    var HOME_LNG = -2.1644;
+    var FAST_IN  = { M35: true, M40: true, M43: true };
+
+    function haversineMiles(lat1, lng1, lat2, lng2) {
+      var R    = 3958.8;
+      var toR  = function (d) { return d * Math.PI / 180; };
+      var dLat = toR(lat2 - lat1);
+      var dLng = toR(lng2 - lng1);
+      var a    = Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+                 Math.cos(toR(lat1)) * Math.cos(toR(lat2)) *
+                 Math.sin(dLng / 2) * Math.sin(dLng / 2);
+      return R * 2 * Math.asin(Math.sqrt(a));
+    }
+
+    function setStatus(el, state, html) {
+      el.className = 'pc-status visible pc-' + state;
+      el.innerHTML = html;
+    }
+
+    var input  = document.getElementById('fpostcode');
+    var pcBtn  = document.getElementById('pcBtn');
+    var result = document.getElementById('pc-result');
+
+    if (!input) return;
+
+    async function check() {
+      var raw = input.value.trim().toUpperCase().replace(/\s+/g, ' ');
+
+      if (!raw) {
+        setStatus(result, 'error', 'Please enter a postcode to check.');
+        return;
+      }
+      if (!/^[A-Z]{1,2}[0-9][0-9A-Z]?( [0-9][A-Z]{2})?$/.test(raw)) {
+        setStatus(result, 'error', 'That doesn\'t look like a valid UK postcode — please check and try again.');
+        return;
+      }
+
+      var outward = raw.split(' ')[0];
+
+      if (FAST_IN[outward]) {
+        setStatus(result, 'in', '<strong>Yes — we cover your area.</strong> Please continue with the form below.');
+        return;
+      }
+
+      pcBtn.disabled    = true;
+      pcBtn.textContent = '…';
+      setStatus(result, 'loading', 'Checking…');
+
+      try {
+        var isFullPostcode = raw.indexOf(' ') !== -1;
+        var url = isFullPostcode
+          ? 'https://api.postcodes.io/postcodes/' + encodeURIComponent(raw)
+          : 'https://api.postcodes.io/outcodes/'  + encodeURIComponent(raw);
+
+        var res  = await fetch(url);
+        var json = await res.json();
+
+        if (json.status !== 200 || !json.result || json.result.latitude == null) {
+          setStatus(result, 'error', 'We couldn\'t find that postcode — please double-check and try again.');
+          return;
+        }
+
+        var lat   = json.result.latitude;
+        var lng   = json.result.longitude;
+        var miles = haversineMiles(HOME_LAT, HOME_LNG, lat, lng);
+
+        var r        = json.result;
+        var areaName = Array.isArray(r.admin_ward)
+          ? (r.admin_district && r.admin_district[0] ? r.admin_district[0] : outward)
+          : (r.admin_ward || r.parish || outward);
+
+        if (miles <= 3.5) {
+          setStatus(result, 'in',
+            '<strong>Yes — we cover ' + areaName + '.</strong> Please continue with the form below.');
+        } else if (miles <= 4.5) {
+          setStatus(result, 'border',
+            '<strong>You\'re on the edge of our usual area.</strong> Submit the form and Emma will confirm availability for ' + areaName + '.');
+        } else {
+          setStatus(result, 'out',
+            '<strong>Sorry, ' + areaName + ' is outside our usual travel range.</strong> You\'re welcome to get in touch anyway — we\'ll do our best to help.');
+        }
+      } catch (err) {
+        setStatus(result, 'error',
+          'We couldn\'t check that postcode right now. Please continue with the form and include your postcode in your message.');
+      } finally {
+        pcBtn.disabled    = false;
+        pcBtn.textContent = 'Check';
+      }
+    }
+
+    pcBtn.addEventListener('click', check);
+    input.addEventListener('keydown', function (e) {
+      if (e.key === 'Enter') { e.preventDefault(); check(); }
+    });
+    input.addEventListener('blur', function () {
+      if (input.value.trim()) check();
+    });
+  }());
 
   /* FAQ accordion */
   document.querySelectorAll('.faq-item').forEach(item => {
